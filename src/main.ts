@@ -1,36 +1,41 @@
-let camera, scene, renderer;
-let geometry, material, mesh;
+export default class Main{
+	private camera :any
+	private scene :any
+	private renderer :any;
+	private geometry :any;
+	private material :any;
+	private mesh :any;
 
-init();
-animate();
+	constructor() {
+		this.init();
+		this.animate();
+	}
+	private init() {
 
-function init() {
+		this.camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 10 );
+		this.camera.position.z = 1;
 
-	camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 10 );
-	camera.position.z = 1;
+		this.scene = new THREE.Scene();
 
-	scene = new THREE.Scene();
+		this.geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
+		this.material = new THREE.MeshBasicMaterial();
 
-	geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
-	material = new THREE.MeshBasicMaterial();
+		this.mesh = new THREE.Mesh( this.geometry, this.material );
+		this.scene.add( this.mesh );
 
-	mesh = new THREE.Mesh( geometry, material );
-	scene.add( mesh );
+		let ctx = canvas.getContext('webgl')
+		this.renderer = new THREE.WebGLRenderer( { context : ctx , antialias: true } );
+		this.renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( this.renderer.domElement );
 
-	let ctx = canvas.getContext('webgl')
-	renderer = new THREE.WebGLRenderer( { context : ctx , antialias: true } );
-	renderer.setSize( window.innerWidth, window.innerHeight );
-	document.body.appendChild( renderer.domElement );
+	}
 
-}
+	private animate() {
+		requestAnimationFrame(this.animate.bind(this));
 
-function animate() {
+		this.mesh.rotation.x += 0.01;
+		this.mesh.rotation.y += 0.02;
 
-	requestAnimationFrame( animate );
-
-	mesh.rotation.x += 0.01;
-	mesh.rotation.y += 0.02;
-
-	renderer.render( scene, camera );
-
+		this.renderer.render( this.scene, this.camera );
+	}
 }
