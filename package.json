@@ -9,6 +9,10 @@
   "author": "Damian",
   "license": "ISC",
   "devDependencies": {
-    "tslint": "^5.12.1"
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.3"
+  },
+  "dependencies": {
+    "three": "^0.101.1"
   }
 }
