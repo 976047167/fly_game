@@ -12,8 +12,8 @@ export default class Controller{
         document.addEventListener( 'touchend', this.onMouseUp.bind(this), false );
     }
     private onMouseDown(e:any){
-        console.log("down");
-        console.log(e.touches);
+        // console.log("down");
+        // console.log(e.touches);
         let touch = e.touches[0];
         this.isDown =true;
         this.position.x = touch.clientX;
@@ -21,14 +21,16 @@ export default class Controller{
     }
     private onMouseMove(e:any){
         if (this.isDown === false) return;
-        console.log(e)
+        // console.log(e)
         let touch = e.touches[0];
-        this.obj.position.x += (touch.clientX - this.position.x)/5000
-        this.obj.position.y -= (touch.clientY - this.position.y)/5000
+        this.obj.position.x += (touch.clientX - this.position.x)/1000
+        this.obj.position.y -= (touch.clientY - this.position.y)/1000
+        this.position.x = touch.clientX;
+        this.position.y = touch.clientY;
     }
     private onMouseUp(e:any){
-        console.log("up");
-        console.log(this.obj.position);
+        // console.log("up");
+        // console.log(this.obj.position);
         this.isDown =false;
     }
 }

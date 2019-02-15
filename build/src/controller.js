@@ -13,8 +13,8 @@ var Controller = /** @class */ (function () {
         document.addEventListener('touchend', this.onMouseUp.bind(this), false);
     };
     Controller.prototype.onMouseDown = function (e) {
-        console.log("down");
-        console.log(e.touches);
+        // console.log("down");
+        // console.log(e.touches);
         var touch = e.touches[0];
         this.isDown = true;
         this.position.x = touch.clientX;
@@ -23,14 +23,16 @@ var Controller = /** @class */ (function () {
     Controller.prototype.onMouseMove = function (e) {
         if (this.isDown === false)
             return;
-        console.log(e);
+        // console.log(e)
         var touch = e.touches[0];
-        this.obj.position.x += (touch.clientX - this.position.x) / 5000;
-        this.obj.position.y -= (touch.clientY - this.position.y) / 5000;
+        this.obj.position.x += (touch.clientX - this.position.x) / 1000;
+        this.obj.position.y -= (touch.clientY - this.position.y) / 1000;
+        this.position.x = touch.clientX;
+        this.position.y = touch.clientY;
     };
     Controller.prototype.onMouseUp = function (e) {
-        console.log("up");
-        console.log(this.obj.position);
+        // console.log("up");
+        // console.log(this.obj.position);
         this.isDown = false;
     };
     return Controller;
