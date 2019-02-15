@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var spherePool_1 = __importDefault(require("./spherePool"));
+var controller_1 = __importDefault(require("./controller"));
 var Main = /** @class */ (function () {
     function Main() {
         this.grounds = [];
@@ -47,6 +48,7 @@ var Main = /** @class */ (function () {
         this.geometry = new THREE.BoxGeometry(0.15, 0.15, 0.15);
         this.material = new THREE.MeshNormalMaterial();
         this.mesh = new THREE.Mesh(this.geometry, this.material);
+        var controller = new controller_1.default(this.mesh);
         this.scene.add(this.mesh);
     };
     Main.prototype.createGround = function () {

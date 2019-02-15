@@ -1,5 +1,5 @@
-import SpherePool from "./spherePool"
-
+import SpherePool from "./spherePool";
+import Controller from "./controller";
 export default class Main{
 	private camera :any;
 	private scene :any;
@@ -57,6 +57,7 @@ export default class Main{
 		this.geometry = new THREE.BoxGeometry( 0.15, 0.15, 0.15 );
 		this.material = new THREE.MeshNormalMaterial();
 		this.mesh = new THREE.Mesh( this.geometry, this.material );
+		let controller = new Controller(this.mesh);
 		this.scene.add( this.mesh );
 	}
 	private createGround(){
