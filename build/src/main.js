@@ -44,6 +44,7 @@ var Main = /** @class */ (function () {
         var ctx = this.canvas2D.getContext('2d');
         this.stats.update();
         ctx.clearRect(0, 0, this.canvas2D.width, this.canvas2D.height);
+        this.canvas2dTexture.needsUpdate = true;
         ctx.drawImage(this.stats.dom, 0, 0);
         this.renderer.render(this.scene2D, this.camera2D);
         var delta = performance.now() - this._time;
@@ -52,21 +53,26 @@ var Main = /** @class */ (function () {
     };
     Main.prototype.createUI = function () {
         var offCanvas = document.createElement('canvas');
+        offCanvas.width = this.floorPowerOfTwo(offCanvas.width);
+        offCanvas.height = this.floorPowerOfTwo(offCanvas.height);
         var ctx = offCanvas.getContext('2d');
         if (ctx === null)
             return;
         this.stats = new stats_1.default();
         ctx.drawImage(this.stats.dom, 0, 0);
-        var CanvasTexture = new THREE.CanvasTexture(offCanvas);
+        this.canvas2dTexture = new THREE.Texture(offCanvas);
         this.canvas2D = offCanvas;
         var spMaterial = new THREE.SpriteMaterial({
             color: 0xffffff,
-            map: CanvasTexture
+            map: this.canvas2dTexture
         });
         var sp = new THREE.Sprite(spMaterial);
         sp.scale.set(window.innerWidth, window.innerHeight, 1);
         console.log(sp);
         this.scene2D.add(sp);
+    };
+    Main.prototype.floorPowerOfTwo = function (value) {
+        return Math.pow(2, Math.floor(Math.log(value) / Math.LN2));
     };
     Main.prototype.createObj = function () {
         this.createPlayer();
