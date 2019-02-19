@@ -1,0 +1,14 @@
+{
+  "name": "wechat_game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "game.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Damian",
+  "license": "ISC",
+  "dependencies": {
+    "three": "^0.101.1"
+  }
+}

@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var spherePool_1 = __importDefault(require("./spherePool"));
 var controller_1 = __importDefault(require("./controller"));
+var stats_1 = __importDefault(require("./stats"));
 var Main = /** @class */ (function () {
     function Main() {
         this.grounds = [];
@@ -17,22 +18,55 @@ var Main = /** @class */ (function () {
         this.init();
     }
     Main.prototype.init = function () {
-        this.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
+        this.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10000);
+        this.camera2D = new THREE.OrthographicCamera(-window.innerWidth / 2, window.innerWidth / 2, window.innerHeight / 2, -window.innerHeight / 2);
         this.camera.position.z = 1;
+        this.camera2D.position.z = 1;
         this.scene = new THREE.Scene();
+        this.scene2D = new THREE.Scene();
+        this.scene.add(this.camera);
+        this.scene2D.add(this.camera2D);
         this.createObj();
+        this.createUI();
         var ctx = canvas.getContext('webgl');
         this.renderer = new THREE.WebGLRenderer({ context: ctx, antialias: true });
+        // this.renderer.setPixelRatio( window.devicePixelRatio );
         this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.autoClear = false;
         document.body.appendChild(this.renderer.domElement);
         requestAnimationFrame(this.render.bind(this));
     };
     Main.prototype.render = function () {
         requestAnimationFrame(this.render.bind(this));
+        this.renderer.clear();
         this.renderer.render(this.scene, this.camera);
+        this.renderer.clearDepth();
+        var ctx = this.canvas2D.getContext('2d');
+        this.stats.update();
+        ctx.clearRect(0, 0, this.canvas2D.width, this.canvas2D.height);
+        ctx.drawImage(this.stats.dom, 0, 0);
+        this.renderer.render(this.scene2D, this.camera2D);
         var delta = performance.now() - this._time;
         this._time = performance.now();
         this.update(delta);
+    };
+    Main.prototype.createUI = function () {
+        var offCanvas = document.createElement('canvas');
+        var ctx = offCanvas.getContext('2d');
+        if (ctx === null)
+            return;
+        this.stats = new stats_1.default();
+        ctx.drawImage(this.stats.dom, 0, 0);
+        var CanvasTexture = new THREE.CanvasTexture(offCanvas);
+        this.canvas2D = offCanvas;
+        var spMaterial = new THREE.SpriteMaterial({
+            color: 0xffffff,
+            map: CanvasTexture
+        });
+        var sp = new THREE.Sprite(spMaterial);
+        sp.scale.set(window.innerWidth, window.innerHeight, 1);
+        console.log(sp);
+        this.scene2D.add(sp);
     };
     Main.prototype.createObj = function () {
         this.createPlayer();
@@ -68,7 +102,6 @@ var Main = /** @class */ (function () {
         this.grounds.push(point);
         for (var i = 0; i < 3; i++) {
             var clone = point.clone();
-            console.log(clone.position);
             var v = new THREE.Vector3(0, 0, 1);
             clone.rotateOnAxis(v, 0.5 * Math.PI);
             point = clone;
@@ -88,7 +121,6 @@ var Main = /** @class */ (function () {
         var _this = this;
         this.spheres = this.spheres.filter(function (sphere) {
             sphere.position.z += _this.speed * delta;
-            // checkCollision(trees[i].position.x, trees[i].position.z);
             if (sphere.position.z > _this.length * 0.4) {
                 _this.spherePool.delSphere(sphere);
                 return false;
