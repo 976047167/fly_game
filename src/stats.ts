@@ -70,7 +70,8 @@ class Panel{
 	private min :number = Infinity;
 	private max :number = 0;
 	private round :Function = Math.round;
-	private PR :number = this.round(window.devicePixelRatio || 1 );
+	// private PR :number = this.round(window.devicePixelRatio || 1 );
+	private PR :number = 2;
 	private offcanvas :HTMLCanvasElement;
 	private WIDTH :number = 80 * this.PR;
 	private HEIGHT :number = 48 * this.PR;
