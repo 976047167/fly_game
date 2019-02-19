@@ -24,8 +24,8 @@ export default class SpherePool{
         return sphere;
     };
     private createSphere(){
-        const  geometry = new THREE.SphereGeometry(0.2);
-        const material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+        const  geometry = new THREE.SphereGeometry(0.2,16,16);
+        const material = new THREE.MeshLambertMaterial( {color: 0xffff00} );
         const sphere = new THREE.Mesh( geometry, material );
         sphere.active = true;
         sphere.visible = true;

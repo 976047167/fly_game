@@ -24,8 +24,8 @@ var SpherePool = /** @class */ (function () {
     };
     ;
     SpherePool.prototype.createSphere = function () {
-        var geometry = new THREE.SphereGeometry(0.2);
-        var material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+        var geometry = new THREE.SphereGeometry(0.2, 16, 16);
+        var material = new THREE.MeshLambertMaterial({ color: 0xffff00 });
         var sphere = new THREE.Mesh(geometry, material);
         sphere.active = true;
         sphere.visible = true;

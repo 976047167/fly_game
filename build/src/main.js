@@ -78,10 +78,10 @@ var Main = /** @class */ (function () {
     };
     Main.prototype.createObj = function () {
         this.createPlayer();
-        // const pointLight = new THREE.PointLight( "#ccffcc");
-        // pointLight.distance = 100;
-        // pointLight.intensity = 1;
-        // this.mesh.add(pointLight);
+        var pointLight = new THREE.PointLight("#ccffcc");
+        pointLight.distance = 10;
+        pointLight.intensity = 1;
+        this.mesh.add(pointLight);
         this.createGround();
         this.spherePool = new spherePool_1.default(this.scene);
         this.placeSphere();
@@ -96,8 +96,8 @@ var Main = /** @class */ (function () {
     Main.prototype.createGround = function () {
         var backgroundGeometry = new THREE.PlaneGeometry(this.length, this.length * 6);
         // const backgroundMaterial = new THREE.MeshBasicMaterial({color: 0x777777});
-        var backgroundMaterial = new THREE.MeshNormalMaterial();
-        // const backgroundMaterial = new THREE.MeshLambertMaterial({color: 0x777777});
+        // const backgroundMaterial = new THREE.MeshNormalMaterial();
+        var backgroundMaterial = new THREE.MeshPhongMaterial({ color: 0x777777 });
         // const depthMaterial = new THREE.MeshDepthMaterial();
         var background = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
         // const background = new THREE.SceneUtil.createMultiMaterialObject(backgroundGeometry, [backgroundMaterial,depthMaterial]);
