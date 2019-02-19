@@ -66,8 +66,8 @@ export default class Main{
 	}
 	private createUI(){
 		let offCanvas = document.createElement('canvas')
-		offCanvas.width = this.floorPowerOfTwo(offCanvas.width);
-		offCanvas.height = this.floorPowerOfTwo(offCanvas.height);
+		offCanvas.width = this.ceilPowerOfTwo(offCanvas.width);
+		offCanvas.height = this.ceilPowerOfTwo(offCanvas.height);
 		let ctx = offCanvas.getContext('2d')
 		if (ctx === null) return;
 		this.stats = new Stats();
@@ -80,14 +80,15 @@ export default class Main{
 			map:this.canvas2dTexture
 		})
 		const sp = new THREE.Sprite(spMaterial)
-
-		sp.scale.set(window.innerWidth , window.innerHeight, 1);
+		sp.center.set(0,1);
+		sp.scale.set(offCanvas.width ,offCanvas.height, 1);
+		sp.position.set(- window.innerWidth/2,window.innerHeight/2,0)
 		console.log(sp)
 		this.scene2D.add(sp);
 	}
-	private	floorPowerOfTwo(value) {
+	private	ceilPowerOfTwo(value) {
 
-		return Math.pow( 2, Math.floor( Math.log( value ) / Math.LN2 ) );
+		return Math.pow( 2, Math.ceil( Math.log( value ) / Math.LN2 ) );
 
 	}
 	private createObj(){
