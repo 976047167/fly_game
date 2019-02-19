@@ -8,6 +8,7 @@ export default class Main{
 	private scene2D :any;
 	private renderer :any;
 	private canvas2D :any;
+	private canvas2dTexture :any;
 	private stats  :Stats;
 	private geometry :any;
 	private material :any;
@@ -55,6 +56,7 @@ export default class Main{
 		let ctx = this.canvas2D.getContext('2d')
 		this.stats.update();
 		ctx.clearRect(0,0,this.canvas2D.width,this.canvas2D.height);
+		this.canvas2dTexture.needsUpdate = true;
 		ctx.drawImage(this.stats.dom,0,0);
 		this.renderer.render(this.scene2D,this.camera2D);
 		const delta :number = performance.now() - this._time;
@@ -64,23 +66,29 @@ export default class Main{
 	}
 	private createUI(){
 		let offCanvas = document.createElement('canvas')
+		offCanvas.width = this.floorPowerOfTwo(offCanvas.width);
+		offCanvas.height = this.floorPowerOfTwo(offCanvas.height);
 		let ctx = offCanvas.getContext('2d')
 		if (ctx === null) return;
 		this.stats = new Stats();
 		ctx.drawImage(this.stats.dom,0,0);
 
-		let CanvasTexture = new THREE.CanvasTexture( offCanvas);
-
+		this.canvas2dTexture = new THREE.Texture( offCanvas);
 		this.canvas2D=offCanvas ;
 		const spMaterial = new THREE.SpriteMaterial({
 			color: 0xffffff,
-			map:CanvasTexture
+			map:this.canvas2dTexture
 		})
 		const sp = new THREE.Sprite(spMaterial)
 
-		sp.scale.set(window.innerWidth, window.innerHeight, 1);
+		sp.scale.set(window.innerWidth , window.innerHeight, 1);
 		console.log(sp)
 		this.scene2D.add(sp);
+	}
+	private	floorPowerOfTwo(value) {
+
+		return Math.pow( 2, Math.floor( Math.log( value ) / Math.LN2 ) );
+
 	}
 	private createObj(){
 		this.createPlayer();
