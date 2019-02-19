@@ -71,7 +71,7 @@ class Panel{
 	private max :number = 0;
 	private round :Function = Math.round;
 	private PR :number = this.round(window.devicePixelRatio || 1 );
-	private offcanvas :HTMLCanvasElement = document.createElement('canvas');;
+	private offcanvas :HTMLCanvasElement;
 	private WIDTH :number = 80 * this.PR;
 	private HEIGHT :number = 48 * this.PR;
 	private TEXT_X :number = 3 * this.PR;
@@ -85,9 +85,9 @@ class Panel{
 		this.name = name;
 		this.fg = fg;
 		this.bg = bg;
+		this.offcanvas = document.createElement('canvas');
 		let ctx:CanvasRenderingContext2D = this.offcanvas.getContext('2d');
 		this.context =ctx;
-
 		this.context.font = 'bold ' + ( 9 * this.PR ) + 'px Helvetica,Arial,sans-serif';
 		this.context.textBaseline = 'top';
 		this.context.fillStyle = this.bg;

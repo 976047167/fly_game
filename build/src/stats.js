@@ -59,7 +59,6 @@ var Panel = /** @class */ (function () {
         this.max = 0;
         this.round = Math.round;
         this.PR = this.round(window.devicePixelRatio || 1);
-        this.offcanvas = document.createElement('canvas');
         this.WIDTH = 80 * this.PR;
         this.HEIGHT = 48 * this.PR;
         this.TEXT_X = 3 * this.PR;
@@ -71,6 +70,7 @@ var Panel = /** @class */ (function () {
         this.name = name;
         this.fg = fg;
         this.bg = bg;
+        this.offcanvas = document.createElement('canvas');
         var ctx = this.offcanvas.getContext('2d');
         this.context = ctx;
         this.context.font = 'bold ' + (9 * this.PR) + 'px Helvetica,Arial,sans-serif';
@@ -91,7 +91,6 @@ var Panel = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    ;
     Panel.prototype.update = function (value, maxValue) {
         this.min = Math.min(this.min, value);
         this.max = Math.max(this.max, value);
