@@ -33,7 +33,7 @@ var Main = /** @class */ (function () {
         this.scene2D.add(this.camera2D);
         this.createObj();
         this.createUI();
-        var ctx = canvas.getContext('webgl');
+        var ctx = canvas.getContext('webgl') || undefined;
         this.renderer = new THREE.WebGLRenderer({ context: ctx, antialias: true });
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.autoClear = false;

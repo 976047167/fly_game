@@ -36,7 +36,7 @@ export default class Main{
 		this.scene2D.add(this.camera2D);
 		this.createObj();
 		this.createUI();
-		let ctx = canvas.getContext('webgl');
+		let ctx :WebGLRenderingContext|undefined = canvas.getContext('webgl')||undefined;
 		this.renderer = new THREE.WebGLRenderer( { context : ctx , antialias: true } );
 		this.renderer.setSize( window.innerWidth, window.innerHeight );
 		this.renderer.autoClear = false;

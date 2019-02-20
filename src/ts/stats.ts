@@ -95,7 +95,7 @@ class Panel{
 		this.fg = fg;
 		this.bg = bg;
 		this.offcanvas = document.createElement('canvas');
-		let ctx:CanvasRenderingContext2D = this.offcanvas.getContext('2d');
+		let ctx =<CanvasRenderingContext2D>this.offcanvas.getContext('2d');
 		this.context =ctx;
 		this.context.font = 'bold ' + ( 9 * this.PR ) + 'px Helvetica,Arial,sans-serif';
 		this.context.textBaseline = 'top';
