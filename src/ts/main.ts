@@ -1,8 +1,9 @@
 import SpherePool from "./spherePool";
 import Controller from "./controller";
 import Stats from "./stats";
+import * as THREE from "three";
 export default class Main{
-	private camera :any;
+	private camera :THREE.PerspectiveCamera;
 	private camera2D :any;
 	private scene :any;
 	private scene2D :any;
@@ -24,10 +25,6 @@ export default class Main{
 	private length :number = 0.7;
 	private speed :number = 0.001;
 	constructor() {
-		this.init();
-	}
-	private init() {
-
 		this.camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 10000 );
 		this.camera2D = new THREE.OrthographicCamera( - window.innerWidth / 2, window.innerWidth / 2,  window.innerHeight/ 2, - window.innerHeight/ 2,);
 

@@ -1,8 +1,8 @@
 {
-  "name": "fly_game",
+  "name": "wechat_game",
   "version": "1.0.0",
-  "description": "game",
-  "main": "index.js",
+  "description": "",
+  "main": "game.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,7 +10,8 @@
   "license": "ISC",
   "devDependencies": {
     "tslint": "^5.12.1",
-    "typescript": "^3.3.3"
+    "typescript": "^3.3.3",
+    "@types/three": "^0.93.22"
   },
   "dependencies": {
     "three": "^0.101.1"

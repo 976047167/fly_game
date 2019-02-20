@@ -2,10 +2,18 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var spherePool_1 = __importDefault(require("./spherePool"));
 var controller_1 = __importDefault(require("./controller"));
 var stats_1 = __importDefault(require("./stats"));
+var THREE = __importStar(require("three"));
 var Main = /** @class */ (function () {
     function Main() {
         this.grounds = [];
@@ -15,9 +23,6 @@ var Main = /** @class */ (function () {
         this.placeInterval = 2000;
         this.length = 0.7;
         this.speed = 0.001;
-        this.init();
-    }
-    Main.prototype.init = function () {
         this.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10000);
         this.camera2D = new THREE.OrthographicCamera(-window.innerWidth / 2, window.innerWidth / 2, window.innerHeight / 2, -window.innerHeight / 2);
         this.camera.position.z = 1;
@@ -35,7 +40,7 @@ var Main = /** @class */ (function () {
         this.stats = new stats_1.default(this.renderer);
         document.body.appendChild(this.renderer.domElement);
         requestAnimationFrame(this.render.bind(this));
-    };
+    }
     Main.prototype.render = function () {
         requestAnimationFrame(this.render.bind(this));
         this.renderer.clear();

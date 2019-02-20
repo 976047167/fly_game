@@ -1,3 +1,4 @@
+import * as THREE from "three"
 export default class SpherePool{
     private scene:any ;
     private pool:Array<any> ;
