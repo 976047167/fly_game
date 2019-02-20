@@ -22,7 +22,7 @@ export default class Stats{
 		this.fpsPanel = this.addPanel( new Panel( 'FPS', '#0ff', '#002' ) );
 		this.msPanel = this.addPanel( new Panel( 'MS', '#0f0', '#020' ) );
 		this.drawcallPanel = this.addPanel(new Panel('DC','#f08','#201'))
-		if ( self.performance && self.performance.memory ) {
+		if ( window.performance && window.performance.memory ) {
 
 			this.memPanel = this.addPanel( new Panel( 'MB', '#f08', '#201' ) );
 
