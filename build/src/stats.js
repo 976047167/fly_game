@@ -1,18 +1,28 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+var controller_1 = __importDefault(require("./controller"));
 var Stats = /** @class */ (function () {
-    function Stats() {
+    function Stats(renderer) {
+        var _this = this;
         this.mode = 0;
         this.frames = 0;
+        this.renderer = renderer;
         this.container = [];
         this.beginTime = (performance || Date).now();
         this.prevTime = this.beginTime;
         this.fpsPanel = this.addPanel(new Panel('FPS', '#0ff', '#002'));
         this.msPanel = this.addPanel(new Panel('MS', '#0f0', '#020'));
+        this.drawcallPanel = this.addPanel(new Panel('DC', '#f08', '#201'));
         if (self.performance && self.performance.memory) {
             this.memPanel = this.addPanel(new Panel('MB', '#f08', '#201'));
         }
         this.showPanel(0);
+        controller_1.default.instance.registerMouseDown(function (e) {
+            _this.showPanel(++_this.mode % _this.container.length);
+        });
     }
     Object.defineProperty(Stats.prototype, "dom", {
         get: function () {
@@ -40,6 +50,7 @@ var Stats = /** @class */ (function () {
             this.fpsPanel.update((this.frames * 1000) / (time - this.prevTime), 100);
             this.prevTime = time;
             this.frames = 0;
+            this.drawcallPanel.update(this.renderer.info.render.calls, 100);
             if (this.memPanel) {
                 var memory = performance.memory;
                 this.memPanel.update(memory.usedJSHeapSize / 1048576, memory.jsHeapSizeLimit / 1048576);

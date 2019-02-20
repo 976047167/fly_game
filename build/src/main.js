@@ -30,9 +30,9 @@ var Main = /** @class */ (function () {
         this.createUI();
         var ctx = canvas.getContext('webgl');
         this.renderer = new THREE.WebGLRenderer({ context: ctx, antialias: true });
-        // this.renderer.setPixelRatio( window.devicePixelRatio );
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.autoClear = false;
+        this.stats = new stats_1.default(this.renderer);
         document.body.appendChild(this.renderer.domElement);
         requestAnimationFrame(this.render.bind(this));
     };
@@ -58,8 +58,6 @@ var Main = /** @class */ (function () {
         var ctx = offCanvas.getContext('2d');
         if (ctx === null)
             return;
-        this.stats = new stats_1.default();
-        ctx.drawImage(this.stats.dom, 0, 0);
         this.canvas2dTexture = new THREE.Texture(offCanvas);
         this.canvas2D = offCanvas;
         var spMaterial = new THREE.SpriteMaterial({
@@ -70,7 +68,6 @@ var Main = /** @class */ (function () {
         sp.center.set(0, 1);
         sp.scale.set(offCanvas.width, offCanvas.height, 1);
         sp.position.set(-window.innerWidth / 2, window.innerHeight / 2, 0);
-        console.log(sp);
         this.scene2D.add(sp);
     };
     Main.prototype.ceilPowerOfTwo = function (value) {
@@ -87,15 +84,18 @@ var Main = /** @class */ (function () {
         this.placeSphere();
     };
     Main.prototype.createPlayer = function () {
+        var _this = this;
         this.geometry = new THREE.BoxGeometry(0.15, 0.15, 0.15);
         this.material = new THREE.MeshNormalMaterial();
         this.mesh = new THREE.Mesh(this.geometry, this.material);
-        var controller = new controller_1.default(this.mesh);
+        controller_1.default.instance.registerMouseMove(function (e, deltaPos) {
+            _this.mesh.position.x += deltaPos.x / 1000;
+            _this.mesh.position.y -= deltaPos.y / 1000;
+        });
         this.scene.add(this.mesh);
     };
     Main.prototype.createGround = function () {
         var backgroundGeometry = new THREE.PlaneGeometry(this.length, this.length * 6);
-        // const backgroundMaterial = new THREE.MeshBasicMaterial({color: 0x777777});
         // const backgroundMaterial = new THREE.MeshNormalMaterial();
         var backgroundMaterial = new THREE.MeshPhongMaterial({ color: 0x777777 });
         // const depthMaterial = new THREE.MeshDepthMaterial();

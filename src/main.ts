@@ -41,9 +41,9 @@ export default class Main{
 		this.createUI();
 		let ctx = canvas.getContext('webgl');
 		this.renderer = new THREE.WebGLRenderer( { context : ctx , antialias: true } );
-		// this.renderer.setPixelRatio( window.devicePixelRatio );
 		this.renderer.setSize( window.innerWidth, window.innerHeight );
 		this.renderer.autoClear = false;
+		this.stats = new Stats(this.renderer);
 		document.body.appendChild( this.renderer.domElement );
 		requestAnimationFrame(this.render.bind(this));
 	}
@@ -61,7 +61,6 @@ export default class Main{
 		this.renderer.render(this.scene2D,this.camera2D);
 		const delta :number = performance.now() - this._time;
 		this._time =performance.now();
-
 		this.update(delta);
 	}
 	private createUI(){
@@ -70,9 +69,6 @@ export default class Main{
 		offCanvas.height = this.ceilPowerOfTwo(offCanvas.height);
 		let ctx = offCanvas.getContext('2d')
 		if (ctx === null) return;
-		this.stats = new Stats();
-		ctx.drawImage(this.stats.dom,0,0);
-
 		this.canvas2dTexture = new THREE.Texture( offCanvas);
 		this.canvas2D=offCanvas ;
 		const spMaterial = new THREE.SpriteMaterial({
@@ -83,10 +79,9 @@ export default class Main{
 		sp.center.set(0,1);
 		sp.scale.set(offCanvas.width ,offCanvas.height, 1);
 		sp.position.set(- window.innerWidth/2,window.innerHeight/2,0)
-		console.log(sp)
 		this.scene2D.add(sp);
 	}
-	private	ceilPowerOfTwo(value) {
+	private	ceilPowerOfTwo(value :number) {
 
 		return Math.pow( 2, Math.ceil( Math.log( value ) / Math.LN2 ) );
 
@@ -105,12 +100,15 @@ export default class Main{
 		this.geometry = new THREE.BoxGeometry( 0.15, 0.15, 0.15 );
 		this.material = new THREE.MeshNormalMaterial();
 		this.mesh = new THREE.Mesh( this.geometry, this.material );
-		let controller = new Controller(this.mesh);
+		Controller.instance.registerMouseMove((e:TouchEvent,deltaPos:any) =>{
+			this.mesh.position.x += deltaPos.x/1000;
+			this.mesh.position.y -= deltaPos.y/1000;
+		});
+
 		this.scene.add( this.mesh );
 	}
 	private createGround(){
 		const backgroundGeometry = new THREE.PlaneGeometry(this.length,this.length * 6);
-		// const backgroundMaterial = new THREE.MeshBasicMaterial({color: 0x777777});
 		// const backgroundMaterial = new THREE.MeshNormalMaterial();
 		const backgroundMaterial = new THREE.MeshPhongMaterial({color: 0x777777});
 		// const depthMaterial = new THREE.MeshDepthMaterial();

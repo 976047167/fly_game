@@ -1,9 +1,18 @@
 export default class Controller{
-    private obj:any ;
+
+    private static _instance:Controller ;
     private isDown:boolean =false ;
     private position:any = {x:0,y:0};
-    constructor(obj :any){
-        this.obj = obj;
+    private mouseDownHandler :Array<Function> =[];
+    private mouseUpHandler :Array<Function> =[];
+    private mouseMoveHandler :Array<Function> =[];
+    public static get instance(){
+        if (!this._instance){
+            this._instance = new Controller();
+        }
+        return this._instance;
+    }
+    private constructor(){
         this.addListener()
     }
     private addListener(){
@@ -12,25 +21,54 @@ export default class Controller{
         document.addEventListener( 'touchend', this.onMouseUp.bind(this), false );
     }
     private onMouseDown(e:any){
-        // console.log("down");
-        // console.log(e.touches);
-        let touch = e.touches[0];
         this.isDown =true;
+        let touch = e.touches[0];
         this.position.x = touch.clientX;
         this.position.y = touch.clientY;
+        this.mouseDownHandler.map((callback)=>{
+            callback(e);
+        })
     }
     private onMouseMove(e:any){
         if (this.isDown === false) return;
-        // console.log(e)
+        let deltaPos = {x:0,y:0};
         let touch = e.touches[0];
-        this.obj.position.x += (touch.clientX - this.position.x)/1000
-        this.obj.position.y -= (touch.clientY - this.position.y)/1000
+        deltaPos.x = touch.clientX - this.position.x
+        deltaPos.y = touch.clientY - this.position.y
         this.position.x = touch.clientX;
         this.position.y = touch.clientY;
+        this.mouseMoveHandler.map((callback)=>{
+            callback(e,deltaPos);
+        })
     }
     private onMouseUp(e:any){
-        // console.log("up");
-        // console.log(this.obj.position);
         this.isDown =false;
+        this.mouseUpHandler.map((callback)=>{
+            callback(e);
+        })
+    }
+    public registerMouseUP(callback:Function){
+        this.mouseUpHandler.push(callback);
+    }
+    public registerMouseMove(callback:Function){
+        this.mouseMoveHandler.push(callback);
+    }
+    public registerMouseDown(callback:Function){
+        this.mouseDownHandler.push(callback);
+    }
+    public unRegisterMouseUP(callback:Function){
+        this.mouseUpHandler = this.mouseUpHandler.filter((e) => {
+            return e !== callback;
+        });
+    }
+    public unRegisterMouseMove(callback:Function){
+        this.mouseMoveHandler = this.mouseMoveHandler.filter((e) => {
+            return e !== callback;
+        });
+    }
+    public unRegisterMouseDown(callback:Function){
+        this.mouseDownHandler = this.mouseDownHandler.filter((e) => {
+            return e !== callback;
+        });
     }
 }
