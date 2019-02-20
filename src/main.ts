@@ -137,6 +137,12 @@ export default class Main{
 	private updatePlayer(){
 		this.mesh.rotation.x += 0.01;
 		this.mesh.rotation.y += 0.02;
+		if (Math.abs(this.mesh.position.x) > this.length/2 - 0.07){
+			this.mesh.position.x = this.mesh.position.x > 0 ? this.length/2-0.07:-this.length/2+0.07
+		}
+		if (Math.abs(this.mesh.position.y) > this.length/2 - 0.07){
+			this.mesh.position.y = this.mesh.position.y > 0 ? this.length/2-0.07:-this.length/2+0.07
+		}
 	}
 	private updateSphere(delta:number) {
 		this.spheres = this.spheres.filter(sphere=> {

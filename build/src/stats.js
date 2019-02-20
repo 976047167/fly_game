@@ -20,7 +20,7 @@ var Stats = /** @class */ (function () {
             this.memPanel = this.addPanel(new Panel('MB', '#f08', '#201'));
         }
         this.showPanel(0);
-        controller_1.default.instance.registerMouseDown(function (e) {
+        controller_1.default.instance.registerMouseUp(function (e) {
             _this.showPanel(++_this.mode % _this.container.length);
         });
     }

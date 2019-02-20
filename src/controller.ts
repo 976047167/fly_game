@@ -47,7 +47,7 @@ export default class Controller{
             callback(e);
         })
     }
-    public registerMouseUP(callback:Function){
+    public registerMouseUp(callback:Function){
         this.mouseUpHandler.push(callback);
     }
     public registerMouseMove(callback:Function){
@@ -56,7 +56,7 @@ export default class Controller{
     public registerMouseDown(callback:Function){
         this.mouseDownHandler.push(callback);
     }
-    public unRegisterMouseUP(callback:Function){
+    public unRegisterMouseUp(callback:Function){
         this.mouseUpHandler = this.mouseUpHandler.filter((e) => {
             return e !== callback;
         });

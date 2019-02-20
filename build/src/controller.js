@@ -52,7 +52,7 @@ var Controller = /** @class */ (function () {
             callback(e);
         });
     };
-    Controller.prototype.registerMouseUP = function (callback) {
+    Controller.prototype.registerMouseUp = function (callback) {
         this.mouseUpHandler.push(callback);
     };
     Controller.prototype.registerMouseMove = function (callback) {
@@ -61,7 +61,7 @@ var Controller = /** @class */ (function () {
     Controller.prototype.registerMouseDown = function (callback) {
         this.mouseDownHandler.push(callback);
     };
-    Controller.prototype.unRegisterMouseUP = function (callback) {
+    Controller.prototype.unRegisterMouseUp = function (callback) {
         this.mouseUpHandler = this.mouseUpHandler.filter(function (e) {
             return e !== callback;
         });

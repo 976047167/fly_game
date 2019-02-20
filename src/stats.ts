@@ -29,7 +29,7 @@ export default class Stats{
 		}
 
 		this.showPanel( 0 );
-		Controller.instance.registerMouseDown((e:TouchEvent) => {
+		Controller.instance.registerMouseUp((e:TouchEvent) => {
 			this.showPanel(++this.mode %this.container.length)
 		})
 
