@@ -1,13 +1,17 @@
 {
   "name": "wechat_game",
   "version": "1.0.0",
-  "description": "",
+  "description": "three.js微信小游戏",
   "main": "game.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Damian",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.hlouis.com:threejs/wechatminigamedemo.git"
+  },
   "devDependencies": {
     "tslint": "^5.12.1",
     "typescript": "^3.3.3",
