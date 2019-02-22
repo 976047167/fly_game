@@ -83,16 +83,16 @@ class Panel{
 	private max :number = 0;
 	private round :Function = Math.round;
 	// private PR :number = this.round(window.devicePixelRatio || 1 );
-	private PR :number = 2 * window.devicePixelRatio ;
+	private PR :number = window.devicePixelRatio ;
 	private offcanvas :HTMLCanvasElement;
-	private WIDTH :number = 80 * this.PR;
-	private HEIGHT :number = 48 * this.PR;
-	private TEXT_X :number = 3 * this.PR;
-	private TEXT_Y :number = 2 * this.PR;
-	private GRAPH_X :number = 3 * this.PR;
-	private GRAPH_Y :number = 15 * this.PR;
-	private GRAPH_WIDTH :number = 74 * this.PR;
-	private GRAPH_HEIGHT :number= 30 * this.PR;
+	private WIDTH :number = 160 * this.PR;
+	private HEIGHT :number = 96 * this.PR;
+	private TEXT_X :number = 6 * this.PR;
+	private TEXT_Y :number = 4 * this.PR;
+	private GRAPH_X :number = 6 * this.PR;
+	private GRAPH_Y :number = 30 * this.PR;
+	private GRAPH_WIDTH :number = 148 * this.PR;
+	private GRAPH_HEIGHT :number= 60 * this.PR;
 	private context :CanvasRenderingContext2D;
 	constructor(name:string,fg:string,bg:string){
 		this.name = name;
@@ -103,7 +103,7 @@ class Panel{
 		this.offcanvas.height = this.HEIGHT;
 		let ctx =<CanvasRenderingContext2D>this.offcanvas.getContext('2d');
 		this.context =ctx;
-		this.context.font = 'bold ' + ( 9 * this.PR ) + 'px Helvetica,Arial,sans-serif';
+		this.context.font = 'bold ' + ( 18 * this.PR ) + 'px Helvetica,Arial,sans-serif';
 		this.context.textBaseline = 'top';
 		this.context.fillStyle = this.bg;
 		this.context.fillRect( 0, 0, this.WIDTH, this.HEIGHT );

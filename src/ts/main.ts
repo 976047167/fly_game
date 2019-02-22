@@ -28,8 +28,8 @@ export default class Main {
 		this.renderer = new THREE.WebGLRenderer( { context : ctx , antialias: true } );
 		this.renderer.setSize( window.innerWidth, window.innerHeight );
 		this.renderer.setPixelRatio(window.devicePixelRatio);
-		this.createObj();
 		document.body.appendChild( this.renderer.domElement );
+		this.createObj();
 		requestAnimationFrame(this.render.bind(this));
 	}
 
