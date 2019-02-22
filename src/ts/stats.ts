@@ -5,14 +5,14 @@ export default class Stats{
 	private container :Array<HTMLCanvasElement>;
 	private fpsPanel :Panel;
 	private msPanel :Panel;
-	private drawcallPanel :Panel;
+	private drawcallPanel :Panel|undefined;
 	private memPanel :Panel|undefined;
 	private beginTime :number;
 	private prevTime :number;
 	private frames :number =0;
-	private offcanvas :HTMLCanvasElement | undefined;
-	public get dom(){
-		return this.offcanvas;
+	private offcanvas :HTMLCanvasElement|undefined;
+	public get dom ():HTMLCanvasElement{
+		return <HTMLCanvasElement>this.offcanvas;
 	}
 	constructor(renderer :THREE.WebGLRenderer){
 		this.renderer = renderer;
@@ -83,7 +83,7 @@ class Panel{
 	private max :number = 0;
 	private round :Function = Math.round;
 	// private PR :number = this.round(window.devicePixelRatio || 1 );
-	private PR :number = 2;
+	private PR :number = 2 * window.devicePixelRatio ;
 	private offcanvas :HTMLCanvasElement;
 	private WIDTH :number = 80 * this.PR;
 	private HEIGHT :number = 48 * this.PR;
@@ -99,6 +99,8 @@ class Panel{
 		this.fg = fg;
 		this.bg = bg;
 		this.offcanvas = document.createElement('canvas');
+		this.offcanvas.width = this.WIDTH;
+		this.offcanvas.height = this.HEIGHT;
 		let ctx =<CanvasRenderingContext2D>this.offcanvas.getContext('2d');
 		this.context =ctx;
 		this.context.font = 'bold ' + ( 9 * this.PR ) + 'px Helvetica,Arial,sans-serif';
