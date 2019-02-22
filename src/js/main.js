@@ -31,13 +31,16 @@ var Main = /** @class */ (function () {
         this.scene2D = new THREE.Scene();
         this.scene.add(this.camera);
         this.scene2D.add(this.camera2D);
-        this.createObj();
-        this.createUI();
-        var ctx = canvas.getContext('webgl') || undefined;
+        canvas.width *= window.devicePixelRatio;
+        canvas.height *= window.devicePixelRatio;
+        var ctx = canvas.getContext('webgl');
         this.renderer = new THREE.WebGLRenderer({ context: ctx, antialias: true });
         this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.autoClear = false;
         this.stats = new stats_1.default(this.renderer);
+        this.createObj();
+        this.createUI();
         document.body.appendChild(this.renderer.domElement);
         requestAnimationFrame(this.render.bind(this));
     }

@@ -15,7 +15,9 @@ var Stats = /** @class */ (function () {
         this.prevTime = this.beginTime;
         this.fpsPanel = this.addPanel(new Panel('FPS', '#0ff', '#002'));
         this.msPanel = this.addPanel(new Panel('MS', '#0f0', '#020'));
-        this.drawcallPanel = this.addPanel(new Panel('DC', '#f08', '#201'));
+        if (this.renderer) {
+            this.drawcallPanel = this.addPanel(new Panel('DC', '#f08', '#201'));
+        }
         if (window.performance && window.performance.memory) {
             this.memPanel = this.addPanel(new Panel('MB', '#f08', '#201'));
         }
@@ -50,7 +52,9 @@ var Stats = /** @class */ (function () {
             this.fpsPanel.update((this.frames * 1000) / (time - this.prevTime), 100);
             this.prevTime = time;
             this.frames = 0;
-            this.drawcallPanel.update(this.renderer.info.render.calls, 100);
+            if (this.drawcallPanel) {
+                this.drawcallPanel.update(this.renderer.info.render.calls, 100);
+            }
             if (this.memPanel) {
                 var memory = performance.memory;
                 this.memPanel.update(memory.usedJSHeapSize / 1048576, memory.jsHeapSizeLimit / 1048576);

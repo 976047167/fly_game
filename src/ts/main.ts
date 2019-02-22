@@ -7,7 +7,7 @@ export default class Main{
 	private camera2D :any;
 	private scene :any;
 	private scene2D :any;
-	private renderer :any;
+	private renderer :THREE.WebGLRenderer;
 	private canvas2D :any;
 	private canvas2dTexture :any;
 	private stats  :Stats;
@@ -34,13 +34,16 @@ export default class Main{
 		this.scene2D =new THREE.Scene();
 		this.scene.add(this.camera);
 		this.scene2D.add(this.camera2D);
-		this.createObj();
-		this.createUI();
-		let ctx :WebGLRenderingContext|undefined = canvas.getContext('webgl')||undefined;
+		canvas.width *= window.devicePixelRatio;
+		canvas.height *= window.devicePixelRatio;
+		let ctx = <WebGLRenderingContext>canvas.getContext('webgl');
 		this.renderer = new THREE.WebGLRenderer( { context : ctx , antialias: true } );
 		this.renderer.setSize( window.innerWidth, window.innerHeight );
+		this.renderer.setPixelRatio(window.devicePixelRatio);
 		this.renderer.autoClear = false;
 		this.stats = new Stats(this.renderer);
+		this.createObj();
+		this.createUI();
 		document.body.appendChild( this.renderer.domElement );
 		requestAnimationFrame(this.render.bind(this));
 	}
